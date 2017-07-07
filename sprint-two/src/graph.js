@@ -61,15 +61,11 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
   for (var key in this.nodes) {
-    if (key === JSON.stringify(fromNode)) {
+    if (key === JSON.stringify(fromNode) || key === JSON.stringify(toNode)) {
       for (var i = 0; i < this.nodes[key].length; i++) {
         if (this.nodes[key][i] === toNode) {
           delete this.nodes[key][i];
         }
-      }
-    }
-    if (key === JSON.stringify(toNode)) {
-      for (var i = 0; i < this.nodes[key].length; i++) {
         if (this.nodes[key][i] === fromNode) {
           delete this.nodes[key][i];
         }
@@ -80,10 +76,19 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
+  for (var key in this.nodes) {
+    cb(JSON.parse(key));
+  }
 };
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  addNode: O(1);
+  contains: O(n);
+  removeNode: O(n^2);
+  addEdge: O(n);
+  removeEdge: O(n^2);
+  forEachNode: O(n);
  */
 
 
