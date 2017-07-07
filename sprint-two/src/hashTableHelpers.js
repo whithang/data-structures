@@ -13,6 +13,8 @@
 
 var LimitedArray = function(limit) {
   var storage = [];
+  var buckets = [];
+  var tuples = [];
 
   var limitedArray = {};
   limitedArray.get = function(index) {
@@ -27,6 +29,10 @@ var LimitedArray = function(limit) {
     for (var i = 0; i < storage.length; i++) {
       callback(storage[i], i, storage);
     }
+  };
+  limitedArray.delete = function(index) {
+    checkLimit(index);
+    delete storage[index];
   };
 
   var checkLimit = function(index) {
